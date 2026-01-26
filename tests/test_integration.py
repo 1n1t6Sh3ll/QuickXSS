@@ -49,11 +49,16 @@ def test_integration_scan(tmp_path: Path) -> None:
             "--results-dir",
             str(tmp_path),
             "--overwrite",
-            "--quiet",
+            "--verbose",
+            "--dalfox-args",
+            # Limit timeout for faster CI runs and skip headless browser to avoid
+            # chromedp panics in headless CI environments without Chrome
+            "--timeout 5 --skip-headless",
         ],
     )
 
-    assert result.exit_code == 0
+    # Include output for debugging CI failures
+    assert result.exit_code == 0, f"exit_code={result.exit_code}\n{result.output}"
 
     base_dir = tmp_path / domain
     urls_file = base_dir / f"{domain}.txt"
