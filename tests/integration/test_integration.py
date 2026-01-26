@@ -1,3 +1,5 @@
+"""Integration tests for QuickXSS."""
+
 from __future__ import annotations
 
 import os
